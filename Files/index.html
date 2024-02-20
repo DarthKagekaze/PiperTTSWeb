@@ -1,0 +1,731 @@
+<!--<!DOCTYPE html>-->
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="ort.min.js">
+    </script>
+    <script src="numjs.min.js">
+    </script>
+    <script src="ffmpeg.min.js">
+    </script>
+    <script>
+	async function main() {
+        console.log("Starting Function from buttton   (Run main function)");
+        console.log(" ");
+        console.log(" ");
+
+
+         
+//                                                                              ▀███          ▀███       ██              ▄█▀▀▀         
+//                                                                                ██            ██                       ██▀            
+//   ▄██▀██▄▀████████▄ ▀████████▄ ▀██▀   ▀██▀   ▀████████▄█████▄   ▄██▀██▄   ▄█▀▀███   ▄▄█▀██   ██     ▀███ ▀████████▄  █████   ▄██▀██▄ 
+//  ██▀   ▀██ ██    ██   ██    ██   ▀██ ▄█▀       ██    ██    ██  ██▀   ▀██▄██    ██  ▄█▀   ██  ██       ██   ██    ██   ██    ██▀   ▀██
+//  ██     ██ ██    ██   ██    ██     ███         ██    ██    ██  ██     █████    ██  ██▀▀▀▀▀▀  ██       ██   ██    ██   ██    ██     ██
+//  ██▄   ▄██ ██    ██   ██    ██   ▄█▀ ██▄       ██    ██    ██  ██▄   ▄██▀██    ██  ██▄    ▄  ██       ██   ██    ██   ██    ██▄   ▄██
+//   ▀█████▀▄████  ████▄████  ████▄██▄   ▄██▄   ▄████  ████  ████▄ ▀█████▀  ▀████▀███▄ ▀█████▀▄████▄   ▄████▄████  ████▄████▄   ▀█████▀ 
+                                                                                                                                     
+                                                                                                                                     
+
+
+        // There are 3 inputs fed into the onnx model.   There is 1 output from the onnx model.
+
+        //                      INPUTS
+        // 1.) input
+        // 2.) input_lengths
+        // 3.) scales
+
+
+        //                      INPUTS Shape
+        // 1.) input         = Tensorint64      = [batch_size, phonemes]                batch_size = 1   phonemes is equal to the text phonemized into an array
+        // 2.) input_lengths = Tensorint64      = [batch_size]                          batch_size = 1   The length of the phonemized text into an integer           
+        // 3.) scales        = Tensorfloat32    = [3]                                   scales = [0.667, 1.0, 0.8]              as per documentation
+
+        
+
+        //                      OUTPUTS
+        // 1.) output
+
+
+
+        //                      OUTPUTS Shape
+        // 1.) output = Tensorfloat32 [batch_size, time, Unsqueezedoutput_dim_2, Unsqueezedoutput_dim_3]
+
+
+
+
+
+
+
+
+
+//              ▄▄                                                                                                                                      ▄▄                      
+//               ▀██        ▄▄█▀▀▀█▄█                         ██                                         ██                                             ██                      
+//  ▄▄▄            ██     ▄██▀     ▀█                         ██                                         ██                                                                     
+// ▀███            ▀██    ██▀       ▀███▄███  ▄▄█▀██ ▄█▀██▄ ██████  ▄▄█▀██              ▄██▀██▄▀███▄█████████             ▄██▀███ ▄▄█▀██ ▄██▀███▄██▀██████   ▄██▀██▄▀████████▄  
+//   ██             ██    ██          ██▀ ▀▀ ▄█▀   ███   ██   ██   ▄█▀   ██            ██▀   ▀██ ██▀ ▀▀  ██               ██   ▀▀▄█▀   ████   ▀▀██   ▀▀ ██  ██▀   ▀██ ██    ██  
+//   ██             ██    ██▄         ██     ██▀▀▀▀▀▀▄█████   ██   ██▀▀▀▀▀▀            ██     ██ ██      ██               ▀█████▄██▀▀▀▀▀▀▀█████▄▀█████▄ ██  ██     ██ ██    ██  
+//   ██     ▄▄     ▄██    ▀██▄     ▄▀ ██     ██▄    ▄█   ██   ██   ██▄    ▄            ██▄   ▄██ ██      ██               █▄   ████▄    ▄█▄   ███▄   ██ ██  ██▄   ▄██ ██    ██  
+// ▄████▄   ██     ██       ▀▀█████▀▄████▄    ▀█████▀████▀██▄ ▀████ ▀█████▀             ▀█████▀▄████▄    ▀████            ██████▀ ▀█████▀██████▀██████▀████▄ ▀█████▀▄████  ████▄
+//              ▄██                                                                                                                                                             
+//              ▀                                                                                                                                                               
+
+        console.log("  ");
+        console.log("Creating [ort] Onnx-RunTime  Session to be able to run your ONNX Model");
+        console.log("  ");
+        console.log("  ");
+        console.log("  ");
+
+
+        // create a new session and load the specific model. Options may need changing for GPU/chrome/firefox later
+        const options = { executionProviders: ['wasm'], graphOptimizationLevel: 'all' };   
+        const session = await ort.InferenceSession.create('./model.onnx', options);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                 ▄▄                                                                                                                                                                        
+//                  ▀██       ▄▄█▀▀▀█▄█                         ██              ▀████▀                                 ██      ███▀▀██▀▀███                                                  
+//                    ██    ▄██▀     ▀█                         ██                ██                                   ██      █▀   ██   ▀█                                                  
+//  ███▀██▄           ▀██   ██▀       ▀███▄███  ▄▄█▀██ ▄█▀██▄ ██████  ▄▄█▀██      ██ ▀████████▄ ▀████████▄▀███  ▀███ ██████         ██      ▄▄█▀██▀████████▄  ▄██▀███ ▄██▀██▄▀███▄███ ▄██▀███
+// ███   ██            ██   ██          ██▀ ▀▀ ▄█▀   ███   ██   ██   ▄█▀   ██     ██   ██    ██   ██   ▀██  ██    ██   ██           ██     ▄█▀   ██ ██    ██  ██   ▀▀██▀   ▀██ ██▀ ▀▀ ██   ▀▀
+//     ▄▄██            ██   ██▄         ██     ██▀▀▀▀▀▀▄█████   ██   ██▀▀▀▀▀▀     ██   ██    ██   ██    ██  ██    ██   ██           ██     ██▀▀▀▀▀▀ ██    ██  ▀█████▄██     ██ ██     ▀█████▄
+//  ▄▄█▀      ▄▄      ▄██   ▀██▄     ▄▀ ██     ██▄    ▄█   ██   ██   ██▄    ▄     ██   ██    ██   ██   ▄██  ██    ██   ██           ██     ██▄    ▄ ██    ██  █▄   ████▄   ▄██ ██     █▄   ██
+// ████████   ██      ██      ▀▀█████▀▄████▄    ▀█████▀████▀██▄ ▀████ ▀█████▀   ▄████▄████  ████▄ ██████▀   ▀████▀███▄ ▀████      ▄████▄    ▀█████▀████  ████▄██████▀ ▀█████▀▄████▄   ██████▀
+//                 ▄██                                                                            ██                                                                                         
+//                 ▀                                                                            ▄████▄                                                                                       
+
+
+        console.log("  ");
+        console.log("Creating your Input Tensors for the ONNX Model");
+        console.log("  ");
+        console.log("  ");
+        console.log("  ");
+
+
+
+
+                                //   ▄▄          ▄▄             ▄▄                                        
+                                //   ██           ▀██           ██                                   ██   
+                                //                  ██                                               ██   
+                                // ▀███             ▀██       ▀███ ▀████████▄ ▀████████▄▀███  ▀███ ██████ 
+                                //   ██              ██         ██   ██    ██   ██   ▀██  ██    ██   ██   
+                                //   ██              ██         ██   ██    ██   ██    ██  ██    ██   ██   
+                                //   ██     ▄▄      ▄██         ██   ██    ██   ██   ▄██  ██    ██   ██   
+                                // ▄████▄   ██      ██        ▄████▄████  ████▄ ██████▀   ▀████▀███▄ ▀████
+                                //               ▄██                            ██                        
+                                //               ▀                            ▄████▄                      
+
+
+        //Create the   Array Data     for the ONNX Model's first input (The first input is named: input)
+        let inputData = new BigInt64Array([[1n],  1n, 20n, 0n, 59n, 0n, 24n, 0n, 120n, 0n, 27n, 0n, 100n, 0n, 3n, 0n, 2n])     //hello  ==     həlˈo͡ʊ        
+
+        //Create the   Tensor Data    for the Onnx Model's first input (The first input is named: input)
+        const inputTensor = new ort.Tensor('int64', inputData, [1, inputData.length]);
+
+
+
+
+
+
+
+
+
+                                //   ▄▄   ▄▄          ▄▄             ▄▄                                              ▄▄                                   ▄▄               
+                                //   ██   ██           ▀██           ██                                   ██       ▀███                              ██  ███               
+                                //                       ██                                               ██         ██                              ██   ██               
+                                // ▀███ ▀███             ▀██       ▀███ ▀████████▄ ▀████████▄▀███  ▀███ ██████       ██   ▄▄█▀██▀████████▄  ▄█▀██████████ ███████▄  ▄██▀███
+                                //   ██   ██              ██         ██   ██    ██   ██   ▀██  ██    ██   ██         ██  ▄█▀   ██ ██    ██ ▄██  ██   ██   ██    ██  ██   ▀▀
+                                //   ██   ██              ██         ██   ██    ██   ██    ██  ██    ██   ██         ██  ██▀▀▀▀▀▀ ██    ██ ▀█████▀   ██   ██    ██  ▀█████▄
+                                //   ██   ██     ▄▄      ▄██         ██   ██    ██   ██   ▄██  ██    ██   ██         ██  ██▄    ▄ ██    ██ ██        ██   ██    ██  █▄   ██
+                                // ▄████▄████▄   ██      ██        ▄████▄████  ████▄ ██████▀   ▀████▀███▄ ▀████    ▄████▄ ▀█████▀████  ████▄███████  ▀███████  ████▄██████▀
+                                //                    ▄██                            ██                                                    █▀     ██                       
+                                //                    ▀                            ▄████▄                                                  ██████▀                         
+
+
+        //Create the   Array Data     for the ONNX Model's second input (The second input is named: input_lengths)
+        let input_lengthsData = new BigInt64Array([BigInt(inputData.length)]);
+
+        //Create the   Tensor Data    for the ONNX Model's second input (The second input is named: input_lengths)
+        const input_lengthsTensor = new ort.Tensor('int64', input_lengthsData, [input_lengthsData.length]);
+
+
+
+
+
+
+
+
+
+                                // ▄▄   ▄▄   ▄▄          ▄▄                                          ▄▄                 
+                                //   ██   ██   ██           ▀██                                      ▀███                 
+                                //                            ██                                       ██                 
+                                // ▀███ ▀███ ▀███             ▀██        ▄██▀███   ▄██▀██    ▄█▀██▄    ██   ▄▄█▀██ ▄██▀███
+                                //   ██   ██   ██              ██        ██   ▀▀  ██▀  ██   ██   ██    ██  ▄█▀   ████   ▀▀
+                                //   ██   ██   ██              ██        ▀█████▄  ██         ▄█████    ██  ██▀▀▀▀▀▀▀█████▄
+                                //   ██   ██   ██     ▄▄      ▄██        █▄   ██  ██▄    ▄  ██   ██    ██  ██▄    ▄█▄   ██
+                                // ▄████▄████▄████▄   ██      ██         ██████▀   █████▀   ▀████▀██▄▄████▄ ▀█████▀██████▀
+                                //                         ▄██                                                              
+                                //                         ▀                                                                
+
+
+        //Create the   Array Data     for the ONNX Model's third input (The third input is named: scales)
+        const scalesData = Float32Array.from([0.667, 1.0, 0.8]);     
+
+        //Create the   Tensor Data    for the ONNX Model's third input (The third input is named: scales)
+        const scalesTensor = new ort.Tensor('float32', scalesData, [3]);
+
+
+
+
+
+
+
+
+//                   ▄▄                                                                                                    ▄▄                                                                                             ▄▄▄▄                             
+//                    ▀██     ▀████▄     ▄███▀                       ▄▄█▀▀▀█▄█                         ██                ▀███     ███▀▀██▀▀███                                                       ██                 ▄█▀ ▀▀                 ██          
+//                      ██      ████    ████                       ▄██▀     ▀█                         ██                  ██     █▀   ██   ▀█                                                       ██                 ██▀                    ██          
+//   ██▀▀█▄             ▀██     █ ██   ▄█ ██  ▄█▀██▄ ▀████████▄    ██▀       ▀███▄███  ▄▄█▀██ ▄█▀██▄ ██████  ▄▄█▀██   ▄█▀▀███          ██      ▄▄█▀██▀████████▄  ▄██▀███ ▄██▀██▄▀███▄███ ▄██▀███   ██████  ▄██▀██▄     █████   ▄▄█▀██ ▄█▀██▄ ██████ ▄██▀███
+//  ███  ▀██             ██     █  ██  █▀ ██ ██   ██   ██   ▀██    ██          ██▀ ▀▀ ▄█▀   ███   ██   ██   ▄█▀   ██▄██    ██          ██     ▄█▀   ██ ██    ██  ██   ▀▀██▀   ▀██ ██▀ ▀▀ ██   ▀▀     ██   ██▀   ▀██     ██    ▄█▀   ███   ██   ██   ██   ▀▀
+//       ▄██             ██     █  ██▄█▀  ██  ▄█████   ██    ██    ██▄         ██     ██▀▀▀▀▀▀▄█████   ██   ██▀▀▀▀▀▀███    ██          ██     ██▀▀▀▀▀▀ ██    ██  ▀█████▄██     ██ ██     ▀█████▄     ██   ██     ██     ██    ██▀▀▀▀▀▀▄█████   ██   ▀█████▄
+//     ▀▀██▄    ▄▄      ▄██     █  ▀██▀   ██ ██   ██   ██   ▄██    ▀██▄     ▄▀ ██     ██▄    ▄█   ██   ██   ██▄    ▄▀██    ██          ██     ██▄    ▄ ██    ██  █▄   ████▄   ▄██ ██     █▄   ██     ██   ██▄   ▄██     ██    ██▄    ▄█   ██   ██   █▄   ██
+//        ██    ██      ██    ▄███▄ ▀▀  ▄████▄████▀██▄ ██████▀       ▀▀█████▀▄████▄    ▀█████▀████▀██▄ ▀████ ▀█████▀ ▀████▀███▄      ▄████▄    ▀█████▀████  ████▄██████▀ ▀█████▀▄████▄   ██████▀     ▀████ ▀█████▀    ▄████▄   ▀█████▀████▀██▄ ▀██████████▀
+// ███  ▄█▀          ▄██                               ██                                                                                                                                                                                                  
+//  █████▀           ▀                               ▄████▄                                                                                                                                                                                                
+
+
+
+        console.log("  ");
+        console.log("Mapping your inputs to [feats] features");
+        console.log("  ");
+        console.log("  ");
+        console.log("  ");
+
+
+
+        const feats = { input: inputTensor, input_lengths: input_lengthsTensor, scales: scalesTensor};
+
+
+
+
+
+
+
+
+
+
+//                   ▄▄                                                   ▄▄                                                                                                      ▄▄            ▄▄  
+//                    ▀██     ▀███▀▀▀██▄                             ██  ███                     ▄▄█▀▀██▄ ▀███▄   ▀███▀███▄   ▀███▀███▀   ▀██▀    ▀████▄     ▄███▀              ▀███          ▀███  
+//                      ██      ██   ▀██▄                            ██   ██                   ▄██▀    ▀██▄ ███▄    █   ███▄    █   ███▄  ▄█        ████    ████                  ██            ██  
+//      ▄██             ▀██     ██   ▄██ ▀███  ▀███ ▀████████▄     ██████ ███████▄   ▄▄█▀██    ██▀      ▀██ █ ███   █   █ ███   █    ▀██▄█▀         █ ██   ▄█ ██   ▄██▀██▄   ▄█▀▀███   ▄▄█▀██   ██  
+//     ████              ██     ███████    ██    ██   ██    ██       ██   ██    ██  ▄█▀   ██   ██        ██ █  ▀██▄ █   █  ▀██▄ █      ███          █  ██  █▀ ██  ██▀   ▀██▄██    ██  ▄█▀   ██  ██  
+//   ▄█▀ ██              ██     ██  ██▄    ██    ██   ██    ██       ██   ██    ██  ██▀▀▀▀▀▀   ██▄      ▄██ █   ▀██▄█   █   ▀██▄█    ▄█▀▀██▄        █  ██▄█▀  ██  ██     █████    ██  ██▀▀▀▀▀▀  ██  
+// ▄█▀   ██     ▄▄      ▄██     ██   ▀██▄  ██    ██   ██    ██       ██   ██    ██  ██▄    ▄   ▀██▄    ▄██▀ █     ███   █     ███   ▄█   ▀██▄       █  ▀██▀   ██  ██▄   ▄██▀██    ██  ██▄    ▄  ██  
+// ██████████   ██      ██    ▄████▄ ▄███▄ ▀████▀███▄████  ████▄     ▀███████  ████▄ ▀█████▀     ▀▀████▀▀ ▄███▄    ██ ▄███▄    ██ ▄██▄▄  ▄▄███▄   ▄███▄ ▀▀  ▄████▄ ▀█████▀  ▀████▀███▄ ▀█████▀▄████▄
+//      ██           ▄██                                                                                                                                                                            
+//      ██           ▀                                                                                                                                                                              
+
+
+
+        console.log("  ");
+        console.log("Running your inputs through your onnx model for:    model.onnx");
+        console.log("  ");
+        console.log("  ");
+        console.log("  ");
+
+
+
+        const resultsMAP = await session.run(feats)
+
+
+
+
+
+
+
+
+
+
+
+
+
+        console.log(" ======= Here is the output of the ONNX Model =======  ");
+        console.log(resultsMAP);
+        console.log(" ====================================================  ");
+
+
+
+
+        console.log("\n\n\n");
+
+
+
+        console.log(" ======= Here is the output of every entry of the ONNX Model's output =======  ");
+        console.log(Object.entries(resultsMAP));
+        console.log(" ============================================================================  ");
+
+
+
+        console.log("\n\n\n\n\n");
+
+
+
+        //There is only 1 key in the results, it has a name of "output"
+        console.log(" __---------=====  2.)        Printing Every Key/Value pair found in the ONNX Models output  =====---------__ ");
+        Object.entries(resultsMAP).forEach(([key, value]) => {
+        console.log(`Key: ${key}.        Value: ${value}`);
+        });
+        console.log(" __---------===========================================================================================---------__ ");
+
+
+
+        console.log("\n\n\n\n\n\n\n");
+
+
+
+        console.log(" __---------=====  3.)        Printing the   [output]  property found in the ONNX Models output  =====---------__ ");
+        console.log(resultsMAP.output);
+        console.log(" __---------===========================================================================================---------__ ");
+
+
+
+        console.log("\n\n\n\n\n\n\n");
+
+
+
+        console.log(" __---------=====  4.)        Printing the   [output]  property found in the ONNX Models output EASY TO READ  =====---------__ ");
+        console.log(JSON.stringify(resultsMAP.output, null, 2));//The null and 2 arguments tell JSON.stringify to include all properties in the resulting string and to format it with 2 spaces of indentation, making it easier to read.
+        console.log(JSON.stringify(resultsMAP.output.dims, null, 2));//The null and 2 arguments tell JSON.stringify to include all properties in the resulting string and to format it with 2 spaces of indentation, making it easier to read.
+        console.log(JSON.stringify(resultsMAP.output.data, null, 2));//The null and 2 arguments tell JSON.stringify to include all properties in the resulting string and to format it with 2 spaces of indentation, making it easier to read.
+        console.log(" __---------=======================================================================================================---------__ ");
+
+
+
+        console.log("\n\n\n\n\n\n\n");
+
+
+
+        console.log(" __---------=====  5.)        Printing the   [output.dims, output.size , output.data , output.type]  property found in the ONNX Models output EASY TO READ  =====---------__ ");
+        console.log(resultsMAP.output.dims);
+        console.log("  ");
+        console.log("Here is the   output.size:   " + resultsMAP.output.size);
+        console.log("  ");
+        console.log(resultsMAP.output.data);
+        console.log("  ");
+        console.log("Here is the Tensor Shape of the output from the Onnx Model:   " + resultsMAP.output.type);
+        console.log(" __---------=======================================================================================================---------__ ");
+        
+
+        
+        console.log("\n\n\n\n\n\n\n");
+
+
+
+        console.log(" __---------=====  6.)        Here are output.dims and output.data in depth  =====---------__ ");
+        console.log(resultsMAP.output.dims[0]);
+        console.log(resultsMAP.output.dims[1]);
+        console.log(resultsMAP.output.dims[2]);
+        console.log("\n\n");
+        console.log(resultsMAP.output.data[0]);
+        console.log(resultsMAP.output.data[1]);
+        console.log(resultsMAP.output.data[2]);
+        console.log(resultsMAP.output.data[3]);
+        console.log(" __---------=======================================================================---------__ ");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                          
+//                   ▄▄                  ▄▄                                                                                                                                            ▄▄   ▄▄           
+//                    ▀██     ▀████▀     ██          ██                           ██                                     ██                         ██                               ▀███   ██           
+//                      ██      ██                   ██                           ██                                     ██                         ██                                 ██                
+//   █▄▄▄▄▄▄            ▀██     ██     ▀███  ▄██▀████████  ▄▄█▀██▀████████▄     ██████  ▄██▀██▄      ▄██▀██▄▀███  ▀███ ██████▀████████▄▀███  ▀███ ██████     ▄█▀██▄ ▀███  ▀███    ▄█▀▀███ ▀███   ▄██▀██▄ 
+//  ▄█                   ██     ██       ██  ██   ▀▀ ██   ▄█▀   ██ ██    ██       ██   ██▀   ▀██    ██▀   ▀██ ██    ██   ██    ██   ▀██  ██    ██   ██      ██   ██   ██    ██  ▄██    ██   ██  ██▀   ▀██
+//  █████▄▄              ██     ██     ▄ ██  ▀█████▄ ██   ██▀▀▀▀▀▀ ██    ██       ██   ██     ██    ██     ██ ██    ██   ██    ██    ██  ██    ██   ██       ▄█████   ██    ██  ███    ██   ██  ██     ██
+//       ▀██    ▄▄      ▄██     ██    ▄█ ██  █▄   ██ ██   ██▄    ▄ ██    ██       ██   ██▄   ▄██    ██▄   ▄██ ██    ██   ██    ██   ▄██  ██    ██   ██      ██   ██   ██    ██  ▀██    ██   ██  ██▄   ▄██
+//  █     ██    ██      ██    ██████████████▄██████▀ ▀████ ▀█████▀████  ████▄     ▀████ ▀█████▀      ▀█████▀  ▀████▀███▄ ▀████ ██████▀   ▀████▀███▄ ▀████   ▀████▀██▄ ▀████▀███▄ ▀████▀███▄████▄ ▀█████▀ 
+// ███  ▄██          ▄██                                                                                                       ██                                                                        
+//  █████            ▀                                                                                                       ▄████▄                                                                      
+
+ 
+
+        console.log("\n\n\n\n\n\n\n\n\n\n\n\n");
+        console.log("  ");
+        console.log("Playing the generated Audio through the Web-Browser");
+        console.log("  ");
+
+
+
+
+        //Set the   SampleRate  to that which matches your ONNX Model
+        let sr = 22050;
+
+
+
+
+
+
+
+        //Create an AudioData object to store the audio data from the ONNX's output
+        const audioDataMain = resultsMAP.output.data; 
+
+        // Create an AudioContext
+        const audioContextMain = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Create a buffer
+        const audioBufferMain = audioContextMain.createBuffer(1, audioDataMain.length, sr);
+
+        // Copy the audio data to the buffer
+        audioBufferMain.getChannelData(0).set(audioDataMain);
+
+        // Get the audio element
+        const audioPlayer2 = document.getElementById('audioPlayer2');
+
+        // Create a source node
+        const sourceMain = audioContextMain.createBufferSource();
+        sourceMain.buffer = audioBufferMain;
+
+        // Connect the source node to the destination (the speakers)
+        sourceMain.connect(audioContextMain.destination);
+
+
+
+        // Start playing the audio
+        sourceMain.start();
+
+
+
+
+
+
+
+
+
+        console.log("___________________   Finished (Run Main Function) Button  ___________________");
+        console.log("___________________   Finished (Run Main Function) Button  ___________________");
+        console.log("___________________   Finished (Run Main Function) Button  ___________________");
+
+
+        }
+	</script>
+
+
+
+
+
+
+
+        <script>
+                let session; // Define session at a higher scope
+        
+                async function main2_OnlyLoadOnnxModel() {
+                console.log(" ");
+                console.log(" main2_OnlyLoadOnnxModel ");
+        
+                const options = { executionProviders: ['wasm'], graphOptimizationLevel: 'all' };   
+                session = await ort.InferenceSession.create('./model.onnx', options); // Remove the const keyword
+        
+                console.log(" ");
+                console.log(" ");
+                console.log(" ");
+                console.log("  Finished Loading the Onnx Model ");
+                }
+        
+                async function main3_AfterOnnxAlreadyLoaded() {
+
+                let input_dataTEST = new BigInt64Array([[1n], 1n, 22n, 0n, 33n, 0n, 122n, 0n, 3n, 0n, 51n, 0n, 122n, 0n, 88n, 0n, 3n, 0n, 54n, 0n, 26n, 0n, 41n, 0n, 59n, 0n, 3n, 0n, 88n, 0n, 120n, 0n, 61n, 0n, 17n, 0n, 74n, 0n, 32n, 0n, 3n, 0n, 17n, 0n, 120n, 0n, 51n, 0n, 122n, 0n, 32n, 0n, 3n, 0n, 23n, 0n, 120n, 0n, 51n, 0n, 122n, 0n, 25n, 0n, 3n, 0n, 20n, 0n, 120n, 0n, 27n, 0n, 100n, 0n, 25n, 0n, 28n, 0n, 18n, 0n, 74n, 0n, 17n, 0n, 108n, 0n, 3n, 0n, 39n, 0n, 26n, 0n, 17n, 0n, 3n, 0n, 41n, 0n, 74n, 0n, 3n, 0n, 61n, 0n, 23n, 0n, 31n, 0n, 32n, 0n, 120n, 0n, 61n, 0n, 26n, 0n, 96n, 0n, 59n, 0n, 26n, 0n, 3n, 0n, 74n, 0n, 38n, 0n, 3n, 0n, 120n, 0n, 39n, 0n, 23n, 0n, 32n, 0n, 74n, 0n, 34n, 0n, 2n])     //You are on the Reddit dot com homepage and the extension is active        
+                // console.log(input_dataTEST.length);
+                // console.log(input_dataTEST.length);
+                // console.log(input_dataTEST.length);
+                // console.log(input_dataTEST.length);
+                // console.log(input_dataTEST.length);
+                // console.log(input_dataTEST.length);
+
+
+
+                // let input_lengths_data = new BigInt64Array([172n]);
+                let input_lengths_data2 = new BigInt64Array([BigInt(input_dataTEST.length)]);
+                let scales_data = new Float32Array([0.667, 1.0, 0.8]);
+                let scales_data_size = 0.667 * 1.0 * 0.8;
+
+
+                const scalesdataA = Float32Array.from([0.667, 1.0, 0.8]);     
+                const scalestensorA = new ort.Tensor('float32', scalesdataA, [3]);
+
+                // let scales_data2 = new Float32Array([0.667, 1.0, 0.8]);
+
+                // let inputdataTensor2 = new ort.Tensor('int64', input_dataTEST, [1, input_dataTEST.length]);
+                const inputdataTensor3 = new ort.Tensor('int64', input_dataTEST, [1, input_dataTEST.length]);
+                // const iLDTensor = new ort.Tensor('int64', input_lengths_data, [1]);
+                const iLDTensor2 = new ort.Tensor('int64', input_lengths_data2, [input_lengths_data2.length]);
+                // const scalesTensor = new ort.Tensor('float32', scales_data, [3]);
+                // console.log(iLDTensor);
+                // console.log(iLDTensor);
+                // console.log(iLDTensor);
+
+
+
+                const feedsMODEL5 = {
+                input: inputdataTensor3,
+                input_lengths: iLDTensor2,
+                scales: scalestensorA
+                };
+
+
+
+
+                const resultsMAP_MODEL5 = await session.run(feedsMODEL5) // Now session is accessible here
+                console.log(" ");
+                console.log(" Finished Running Onnx Model ");
+                console.log(" ");
+                //console.log(resultsMAP_MODEL5);
+                const audioData2 = resultsMAP_MODEL5.output.data; 
+                console.log(" ");
+                console.log(" Finished creating audioData2 ");
+                console.log(" ");
+                let sr = 22050;
+                const audioContext2 = new (window.AudioContext || window.webkitAudioContext)();
+                const audioBuffer2 = audioContext2.createBuffer(1, audioData2.length, sr);
+                audioBuffer2.getChannelData(0).set(audioData2);
+                const audioPlayer2 = document.getElementById('audioPlayer2');
+                const source2 = audioContext2.createBufferSource();
+                source2.buffer = audioBuffer2;
+                source2.connect(audioContext2.destination);
+                console.log(" ");
+                console.log(" Playing audio now ");
+                console.log(" ");
+                source2.start();
+                console.log("___________________   Finished (Run onnx after its been loaded already) Button  ___________________");
+                console.log("___________________   Finished (Run onnx after its been loaded already) Button  ___________________");
+                console.log("___________________   Finished (Run onnx after its been loaded already) Button  ___________________");
+
+
+
+
+
+                }
+        </script>
+
+
+
+
+
+
+        <script>
+
+
+                async function main2_OnlyLoadOnnxModel() {
+                console.log(" ");
+                console.log(" main2_OnlyLoadOnnxModel ");
+
+                const options = { executionProviders: ['wasm'], graphOptimizationLevel: 'all' };   
+                session = await ort.InferenceSession.create('./model.onnx', options); // Remove the const keyword
+
+                console.log(" ");
+                console.log(" ");
+                console.log(" ");
+                console.log("  FINISHED  ");
+                }
+
+                async function main4_SayHiANDdownload() {
+                console.log(" ");
+                console.log(" main4_SayHiANDdownload() started... ");
+                console.log(" ");      
+
+
+
+                let input_dataTEST = new BigInt64Array([[1n], 1n, 41n, 0n, 74n, 0n , 31n, 0n, 3n, 74n, 0n, 38n, 0n, 3n, 0n, 50n, 0n, 3n, 0n, 32n, 0n, 120n, 0n, 61n, 0n, 31n, 0n, 32n, 0n, 3n, 0n, 19n, 0n, 54n, 0n, 122n, 0n, 88n, 0n, 3n, 0n, 120n, 0n, 39n, 0n, 19n, 0n, 32n, 60n, 88n, 0n, 3n, 0n, 41n, 0n, 59n, 0n, 3n, 0n, 25n, 0n, 120n, 0n, 51n, 0n, 122n, 0n, 17n,0n, 59n, 0n, 24n, 0n, 3n, 0n, 20n, 0n, 50n, 0n, 38n, 0n, 3n, 0n, 15n, 0n, 121n, 0n, 74n, 0n, 26n, 0n, 3n, 0n, 24n, 0n, 120n, 0n, 27n, 0n, 100n, 0n, 17n, 0n, 128n, 0n, 17n, 0n, 3n, 0n, 2n])     //this is a test for after the model has been loaded  ==   ðɪs ɪz ɐ tˈɛst fɔːɹ ˈæftɚɹ ðə mˈɑːdəl hɐz bˌɪn lˈoʊdᵻd        ======== ðɪs [41, 0, 74, 0 , 31 ]         ɪz [74, 0, 38]           ɐ [50]            tˈɛst  [32, 0, 120, 0, 61, 0, 31, 0, 32]           fɔːɹ  [19,54,122,88]           ˈæftɚɹ [120, 39, 19, 32, 60, 88]             ðə  [41,59]               mˈɑːdəl [25,120,51,122,17,59,24]              hɐz [20,50,38]                 bˌɪn [15,121,74,26]           lˈoʊdᵻd [24,120,27,100,17,128,17]
+
+
+                let input_lengths_data = new BigInt64Array([172n]);
+                let input_lengths_data2 = new BigInt64Array([BigInt(input_dataTEST.length)]);
+                let scales_data = new Float32Array([0.667, 1.0, 0.8]);
+                let scales_data_size = 0.667 * 1.0 * 0.8;
+
+
+                const scalesdataA = Float32Array.from([0.667, 1.0, 0.8]);     
+                const scalestensorA = new ort.Tensor('float32', scalesdataA, [3]);
+                let scales_data2 = new Float32Array([0.667, 1.0, 0.8]);
+
+                let inputdataTensor2 = new ort.Tensor('int64', input_dataTEST, [1, input_dataTEST.length]);
+                const inputdataTensor3 = new ort.Tensor('int64', input_dataTEST, [1, input_dataTEST.length]);
+                const iLDTensor = new ort.Tensor('int64', input_lengths_data, [1]);
+                const iLDTensor2 = new ort.Tensor('int64', input_lengths_data2, [input_lengths_data2.length]);
+                const scalesTensor = new ort.Tensor('float32', scales_data, [3]);
+                console.log(iLDTensor);
+                console.log(iLDTensor);
+                console.log(iLDTensor);
+
+
+                const feedsMODEL5 = {
+                input: inputdataTensor3,
+                input_lengths: iLDTensor2,
+                scales: scalestensorA
+                };
+
+
+
+
+                const resultsMAP_MODEL5 = await session.run(feedsMODEL5) // Now session is accessible here
+                console.log(" ");
+                console.log(" Finished Running Onnx Model ");
+                console.log(" ");
+                const audioData2 = resultsMAP_MODEL5.output.data; 
+                console.log(" ");
+                console.log(" Finished creating audioData2 ");
+                console.log(" ");
+                let sr = 22050;
+                const audioContext2 = new (window.AudioContext || window.webkitAudioContext)();
+                const audioBuffer2 = audioContext2.createBuffer(1, audioData2.length, sr);
+                audioBuffer2.getChannelData(0).set(audioData2);
+   
+
+        
+                const offlineContext = new OfflineAudioContext(audioBuffer2.numberOfChannels, audioBuffer2.length, audioBuffer2.sampleRate);  // Create an OfflineAudioContext using the same parameters as your original AudioContext
+                const sourceDOWNLOAD = offlineContext.createBufferSource();
+                sourceDOWNLOAD.buffer = audioBuffer2;
+
+                // Connect the source to the offline context
+                sourceDOWNLOAD.connect(offlineContext.destination);
+
+                // Start the source
+                sourceDOWNLOAD.start();
+
+
+
+
+                const audioPlayer2 = document.getElementById('audioPlayer2');
+                const source2 = audioContext2.createBufferSource();
+                source2.buffer = audioBuffer2;
+                source2.connect(audioContext2.destination);
+                console.log(" ");
+                console.log(" Playing audio now ");
+                console.log(" ");
+                source2.start();
+                console.log("___________________   Finished [ 3.) Test Run Onnx... ] Button  ___________________");
+                console.log("___________________   Finished [ 3.) Test Run Onnx... ] Button  ___________________");
+                console.log("___________________   Finished [ 3.) Test Run Onnx... ] Button  ___________________");
+
+
+
+
+
+
+//                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                ////////      This code is supposed to download the generated audio, but it is broken for now!!!      /////////
+//                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+//
+//
+//
+//                // Start rendering the buffer
+//                offlineContext.startRendering().then(renderedBuffer => {
+//                // Create a Blob from the rendered buffer
+//                const blob = new Blob([renderedBuffer], { type: 'audio/wav' });
+//
+//                // Create a URL for the Blob
+//                const url = URL.createObjectURL(blob);
+//
+//                // Create a download link and append it to the document
+//                const downloadLink = document.createElement('a');
+//                downloadLink.href = url;
+//                downloadLink.download = 'audio.wav';
+//                document.body.appendChild(downloadLink);
+//                downloadLink.click();
+//                });
+//
+//
+//
+//
+//
+//
+//                // Start rendering the buffer
+//                offlineContext.startRendering().then(renderedBuffer => {
+//                // Create a Blob from the rendered buffer
+//                const blob_DOWNLOAD2 = new Blob([renderedBuffer], { type: 'audio/wav' });
+//
+//                // Create a URL for the Blob
+//                const url_DOWNLOAD_2 = URL.createObjectURL(blob_DOWNLOAD2);
+//
+//                // Create a download link and append it to the document
+//                const downloadLink = document.createElement('a');
+//                downloadLink.href = url_DOWNLOAD_2;
+//                downloadLink.download = 'audio.wav';
+//                document.body.appendChild(downloadLink);
+//                downloadLink.click();
+//                });
+//
+//                // Create a second OfflineAudioContext with the same parameters
+//                const offlineContext2 = new OfflineAudioContext(audioBuffer2.numberOfChannels, audioBuffer2.length, audioBuffer2.sampleRate);
+//                const sourceDOWNLOAD2 = offlineContext2.createBufferSource();
+//                sourceDOWNLOAD2.buffer = audioBuffer2;
+//
+//                // Connect the source to the offline context
+//                sourceDOWNLOAD2.connect(offlineContext2.destination);
+//
+//                // Start the source
+//                sourceDOWNLOAD2.start();
+//
+//                // Start rendering the buffer
+//                offlineContext2.startRendering().then(renderedBuffer => {
+//                // Create a Blob from the rendered buffer
+//                const blob_DOWNLOAD3 = new Blob([renderedBuffer], { type: 'audio/wav' });
+//
+//                // Create a URL for the Blob
+//                const url_DOWNLOAD_3 = URL.createObjectURL(blob_DOWNLOAD3);
+//
+//                // Create a download link and append it to the document
+//                const downloadLink = document.createElement('a');
+//                downloadLink.href = url_DOWNLOAD_3;
+//                downloadLink.download = 'audio2.wav';
+//                document.body.appendChild(downloadLink);
+//                downloadLink.click();
+//                });
+
+
+
+
+
+
+                }
+        </script>
+
+
+
+	<button onclick="main()">Run Both Load and Inference of Model</button>
+
+
+
+        <figure>
+        <figcaption>Listen to audioPlayer:</figcaption>
+        <audio controls id="audioPlayer"></audio>
+        </figure>
+
+
+        <button onclick="main2_OnlyLoadOnnxModel()">1.] Only Load Model</button>
+        <button onclick="main4_SayHiANDdownload()">2.] Inference Model After It Has Been Already Loaded</button>
+
+  </body>
+</html>
