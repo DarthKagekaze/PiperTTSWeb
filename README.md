@@ -25,7 +25,7 @@ ort.min.js.map
 
 ffmpeg.min.js
 
-ffmpeg.min.js.map  https://github.com/sapic/sapic/blob/master/public/ffmpeg/ffmpeg.min.js.map
+ffmpeg.min.js.map  <pre>   https://github.com/sapic/sapic/blob/master/public/ffmpeg/ffmpeg.min.js.map   <pre />
 
 
 
